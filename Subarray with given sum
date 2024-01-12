@@ -1,0 +1,21 @@
+static ArrayList<Integer> subarraySum(int[] arr, int n, int s) {
+        // Your code here
+        int curr = 0, low = 0;
+        ArrayList<Integer>index = new ArrayList<>();
+        for (int high = 0; high < n; high++){
+            curr = curr + arr[high];
+            // sub array sum can become zero if arr[i] > s 
+            while(curr > s && s != 0){
+                curr = curr - arr[low];
+                low++;
+            }
+            if(curr == s){
+                index.add(low+1);
+                index.add(high+1);
+                return index;
+            }
+        }
+        index.add(-1);
+        return index;
+    }
+
