@@ -18,3 +18,4 @@ static int minJumps(int[] arr){
         
         return res;
     }
+
