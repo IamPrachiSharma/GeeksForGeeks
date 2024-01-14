@@ -1,0 +1,24 @@
+class Solution
+{
+    public static ArrayList<Integer> repeatedRows(int matrix[][], int m, int n)
+    {
+        //code here
+          Map<String, Integer> m1 = new HashMap<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+            StringBuilder s = new StringBuilder();
+            for (int j = 0; j < n; j++) {
+                s.append(matrix[i][j]);
+            }
+
+            String key = s.toString();
+            if (m1.containsKey(key) && m1.get(key) != 0) {
+                ans.add(i);
+            }
+            m1.put(key, m1.getOrDefault(key, 0) + 1);
+        }
+
+        return ans;
+    }
+}
