@@ -1,0 +1,23 @@
+class Solution {
+    public pair[] allPairs( long A[], long B[], long N, long M, long X) {
+      Arrays.sort(A);
+      List<Long>listA = new ArrayList<>();
+      for(int i=0;i<A.length;i++) {
+          listA.add(X-A[i]);
+      }
+      List<Long>listB = new ArrayList<>();
+      for(int i=0;i<B.length;i++) {
+          listB.add(B[i]);
+      }
+        List<pair>pairs = new ArrayList<>();
+     for(long l : listA) {
+         if(listB.contains(l)) {
+             pairs.add(new pair(A[listA.indexOf(l)],B[listB.indexOf(l)]));
+         }
+     }
+        pair arr[] = new pair[pairs.size()];
+        pairs.toArray(arr);
+        return arr;
+        
+    }
+}
