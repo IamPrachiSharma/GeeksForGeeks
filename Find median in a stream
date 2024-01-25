@@ -1,0 +1,49 @@
+class Solution
+{
+    //creating two priorityQueue 
+    /*1 is acting like max heap int which we store all the smaller element than median 
+    2 nd is acting like min heap in which we store all the larger element than median
+    */
+    
+   static  PriorityQueue<Integer> s = new PriorityQueue<>(Collections.reverseOrder());
+    static PriorityQueue<Integer> g = new PriorityQueue<>();
+    
+    
+    //Function to insert heap.
+    public static void insertHeap(int x)
+    {
+        if(s.size()==0){
+            s.add(x);
+            return;
+        }
+        
+        if(s.size()>g.size()){
+            if(x<s.peek()){
+                g.add(s.peek());
+                s.poll();
+                s.add(x);
+            }
+            else{
+                g.add(x);
+            }
+        }else{
+            if(x<s.peek()){
+                s.add(x);
+            }else{
+                g.add(x);
+                s.add(g.peek());
+                g.poll();
+            }
+        }
+    }   
+    //Function to return Median.
+    public static double getMedian()
+    {
+        if(s.size()==g.size()){
+            return (double)(s.peek()+g.peek())/2.0;
+        }
+        
+        return s.peek();
+    }
+    
+}
