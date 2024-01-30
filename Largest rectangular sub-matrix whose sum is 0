@@ -1,0 +1,90 @@
+class Solution {
+    public static ArrayList<ArrayList<Integer>> sumZeroMatrix(int[][] a) {
+        // code here
+        
+        return sumequal0(a);
+    }
+    
+    public static boolean iszero(int arr[],int up[],int down[]){
+        HashMap<Integer,Integer> map=new HashMap<>();
+        
+        map.put(0,-1);
+        int maxlength=0;
+        
+        int sum=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            
+            if(map.containsKey(sum)){
+                int len=i-map.get(sum);
+                if(len>maxlength){
+                    maxlength=i-map.get(sum);
+                    up[0]=map.get(sum)+1;
+                    down[0]=i;
+                }
+            }
+            else{
+                map.put(sum,i);
+            }
+        }
+        
+        return (maxlength!=0);
+    }
+    
+    public static ArrayList<ArrayList<Integer>> sumequal0(int a[][]){
+        int r=a.length;
+        int c=a[0].length;
+        
+        int maxarea=Integer.MIN_VALUE;
+        
+        int fup=0;
+        int fdown=0;
+        int fright=0;
+        int fleft=0;
+        
+        int temp[]=new int[r];
+        for(int left=0;left<c;left++){
+            Arrays.fill(temp,0);
+            for(int right=left;right<c;right++){
+                
+                for(int i=0;i<r;i++){
+                    temp[i]+=a[i][right];
+                }
+    
+                //now we would use the concept 
+                //where we would see the largest subarrat where 
+                //sum is equal to zero
+                
+                int up[]=new int[1];
+                int down[]=new int[1];
+                
+                
+                if(iszero(temp,up,down)){
+                    int ele=(down[0]-up[0]+1)*(right-left+1);
+                    if(ele>maxarea){
+                        maxarea=ele;
+                        fup=up[0];
+                        fdown=down[0];
+                        fright=right;
+                        fleft=left;
+                    }
+                }
+                
+            }
+        }
+        
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=fup;i<=fdown;i++){
+            ArrayList<Integer> refans=new ArrayList<>();
+            for(int j=fleft;j<=fright;j++){
+                refans.add(a[i][j]);
+            }
+            
+            adj.add(refans);
+        }
+        
+        return adj;
+        
+        
+    }
+}
