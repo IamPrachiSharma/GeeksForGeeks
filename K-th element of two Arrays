@@ -1,0 +1,13 @@
+class Solution {
+    public long kthElement( int arr1[], int arr2[], int n, int m, int k) {
+     int length = n + m;
+        int[] merged = new int[length];
+
+        System.arraycopy(arr1, 0, merged, 0, n);
+        System.arraycopy(arr2, 0, merged, n, m);
+
+        Arrays.sort(merged);
+
+        return merged[k - 1];
+    }
+}
