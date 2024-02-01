@@ -1,0 +1,14 @@
+public static boolean checkPangram  (String s) {
+        // your code here
+        int a[]=new int[26];
+        int count=0;
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch >='A' && ch <='Z') ch = (char)(ch+32);
+            if(ch >= 'a' && ch <= 'z' && a[ch-'a']==0){
+                a[ch-'a']++;
+                count++;
+            }
+        }
+        return count==26;
+    }
