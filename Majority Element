@@ -1,0 +1,21 @@
+class Solution
+{
+    static int majorityElement(int a[], int size)
+    {
+        if(size==1) return a[0];
+        Arrays.sort(a);
+        int anscount=1;
+        int ans=a[0];
+        for(int i=1; i<size;i++){
+            if(a[i]==ans){
+                anscount++;
+                if(anscount>size/2) return a[i];
+            }
+            else{
+                ans=a[i];
+                anscount=1;
+            }
+        }
+        return -1;
+    }
+}
