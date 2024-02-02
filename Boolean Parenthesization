@@ -1,0 +1,97 @@
+static int countWays(int N, String S){
+        long totalWays = 0;
+        SubTaskResponse[][] dp = new SubTaskResponse[N+5][N+5];
+        if (N == 1 && S.charAt(0) == 'T') {
+            totalWays = 1;
+        } else {
+            totalWays = recurse(S, 0, N - 1, dp).trueCount;
+        }
+        int modOp = (int)totalWays%1003;
+        return modOp;
+    }
+    
+    private static SubTaskResponse recurse(String s, int i, int j, SubTaskResponse[][] dp) {
+        if (i > j) {
+            return new SubTaskResponse(0, 0);
+        }
+
+        if (i == j) {
+            boolean isTrueChar = (s.charAt(i) == 'T');
+            return new SubTaskResponse(isTrueChar ? 1 : 0, isTrueChar ? 0 : 1);
+        }
+        
+        if (dp[i][j] != null) {
+            return dp[i][j];
+        }
+
+        SubTaskResponse response = new SubTaskResponse(0, 0);
+        for (int idx = i + 1; idx < j; idx += 2) {
+            SubTaskResponse temp = new SubTaskResponse();
+            SubTaskResponse left = dp[i][idx - 1] != null ? dp[i][idx - 1] : recurse(s, i, idx - 1, dp);
+            SubTaskResponse right = dp[idx + 1][j] != null ? dp[idx + 1][j] : recurse(s, idx + 1, j, dp);
+            temp.trueCount = evaluateTrueCount(left, right, s.charAt(idx));
+            temp.falseCount = evaluateFalseCount(left, right, s.charAt(idx));
+            response.trueCount += temp.trueCount;
+            response.falseCount += temp.falseCount;
+        }
+
+        return dp[i][j] = response;
+    }
+    
+    private static long evaluateTrueCount(SubTaskResponse a, SubTaskResponse b, char operator) {
+        long totalWays = 0;
+        switch (operator) {
+            case '|':
+                totalWays += multiply(a.trueCount, b.trueCount);
+                totalWays += multiply(a.trueCount, b.falseCount);
+                totalWays += multiply(a.falseCount, b.trueCount);
+                break;
+            case '&':
+                totalWays += multiply(a.trueCount, b.trueCount);
+                break;
+            case '^':
+                totalWays += multiply(a.trueCount, b.falseCount);
+                totalWays += multiply(a.falseCount, b.trueCount);
+                break;
+            default:
+                break;
+        }
+        return totalWays;
+    }
+
+    private static long evaluateFalseCount(SubTaskResponse a, SubTaskResponse b, char operator) {
+        long totalWays = 0;
+        switch (operator) {
+            case '|':
+                totalWays += multiply(a.falseCount, b.falseCount);
+                break;
+            case '&':
+                totalWays += multiply(a.trueCount, b.falseCount);
+                totalWays += multiply(a.falseCount, b.trueCount);
+                totalWays += multiply(a.falseCount, b.falseCount);
+                break;
+            case '^':
+                totalWays += multiply(a.trueCount, b.trueCount);
+                totalWays += multiply(a.falseCount, b.falseCount);
+                break;
+            default:
+                break;
+        }
+        return totalWays;
+    }
+
+    private static long multiply(long a, long b) {
+        return (a%1003 * b%1003)%1003;
+    }
+    
+    static class SubTaskResponse {
+        public long trueCount;
+        public long falseCount;
+
+        public SubTaskResponse(int trueCount, int falseCount) {
+            this.trueCount = trueCount;
+            this.falseCount = falseCount;
+        }
+
+        public SubTaskResponse() { }
+    }
