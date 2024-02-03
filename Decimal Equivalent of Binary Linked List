@@ -1,0 +1,14 @@
+class Solution
+{
+   long DecimalValue(Node head)
+   {
+        long mod = (long) 1e9 + 7;
+        if(head == null) return 0;
+         long res = 0;
+        while (head != null) {
+            res = ((res << 1) | head.data) % mod;
+            head = head.next;
+        }
+        return res;
+   }
+}
