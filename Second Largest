@@ -1,0 +1,33 @@
+class Solution {
+    int print2largest(int arr[], int n) {
+        int[] tmp = Arrays.copyOf(arr, n);
+
+        for (int l = 0; l < n / 2; l++) {
+            int temp = tmp[l];
+            tmp[l] = tmp[n - 1 - l];
+            tmp[n - 1 - l] = temp;
+        }
+
+        if (Arrays.equals(arr, tmp)) {
+            return -1;
+        }
+       int max=Integer.MIN_VALUE;
+        int result =0;
+       int min=Integer.MAX_VALUE;
+       int j=0;
+       for(int i=0;i<n;i++){
+           if(arr[i]>= max){
+               max=arr[i];
+           }
+       }
+      
+       for(;j<n;j++){
+           if(max-arr[j]<=min && max-arr[j]!=0){
+               min=max-arr[j];
+               result=j;
+           }
+           
+       }
+       return arr[result];
+    }
+}
