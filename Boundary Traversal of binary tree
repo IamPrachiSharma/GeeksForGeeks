@@ -1,0 +1,67 @@
+class Solution
+{
+ArrayList <Integer> boundary(Node node)
+{
+    ArrayList<Integer>list=new ArrayList<>();
+    if(node ==null){
+        return null;
+    }
+    if (node.left==null && node.right==null){
+        list.add(node.data);
+    }else{
+        list.add(node.data);
+        leftwall(node.left,list);
+        leave(node,list);
+        rightwall(node.right,list);
+    }
+    return list;
+}
+void leftwall(Node root, ArrayList<Integer>list){
+    if(root==null){
+        return;
+    }
+    if(root.left!=null || root.right!=null){
+        list.add(root.data);
+    }
+    
+    if(root.left!=null){
+        leftwall(root.left,list);
+    }
+   else if(root.right!=null){
+        leftwall(root.right,list);
+    }
+}
+void rightwall(Node root, ArrayList<Integer>list){
+    if(root==null){
+        return;
+    }
+    
+    if(root.right!=null){
+        rightwall(root.right,list);
+    }
+    else if(root.left!=null){
+        rightwall(root.left,list);
+    }
+    
+    if(root.left!=null || root.right!=null){
+        list.add(root.data);
+    }
+}
+void leave(Node root, ArrayList<Integer>list){
+    if(root==null){
+        return;
+    }
+    
+        leave(root.left,list);
+    
+      if(root.left==null && root.right==null){
+        list.add(root.data);
+    }
+    
+    
+   
+        leave(root.right,list);
+    
+}
+}
+ 
