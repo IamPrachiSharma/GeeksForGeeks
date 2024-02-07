@@ -1,0 +1,23 @@
+long findNth(long N)
+
+    {
+
+        //code here
+
+        String ans="";
+
+        while(N>0)
+
+        {
+
+            ans=Long.toString(N%9)+ans;
+
+            N=N/9;
+
+        }
+
+        long a=Long.parseLong(ans);
+
+        return a;
+
+    }
