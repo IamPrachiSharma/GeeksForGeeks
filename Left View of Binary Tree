@@ -1,0 +1,11 @@
+// Your code here
+      ArrayList<Integer> ans= new ArrayList<>();
+      ln(root,1,ans);
+      return ans;
+    }
+    static void ln(Node root, int lev,ArrayList<Integer>  ans){
+        
+        if(root==null) return;
+        if(lev>ans.size()) ans.add(root.data);
+        ln(root.left,lev+1,ans);
+         ln(root.right,lev+1,ans);
