@@ -1,0 +1,40 @@
+class Solution {
+    public static int solve(int n, int k, int[] stalls) {
+        if(stalls.length < k)  return -1;
+        Arrays.sort(stalls);
+        int start = 1;
+        int end = stalls[n - 1] - stalls[0];
+        int ans = -1;
+        while(start<=end)
+        {
+            int mid = start + (end - start)/2;
+            if(all(stalls,mid,k))
+            {
+                ans = mid;
+                start = mid + 1;
+            }else
+            {
+                end = mid - 1;
+            }
+        }
+        return ans;
+    }
+    static boolean all(int [] stalls,int mid,int k)
+    {
+        int cow = 1;
+        int ld = stalls[0];
+        for(int i = 1; i < stalls.length;i++)
+        {
+      if(stalls[i] - ld >= mid)
+        {
+            cow++;
+            ld= stalls[i];
+        }
+        if(cow >= k)
+        {
+            return true;
+        }
+    }
+    return false;
+    }
+}
