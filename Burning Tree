@@ -1,0 +1,82 @@
+class Solution
+{
+    /*class Node {
+    	int data;
+    	Node left;
+    	Node right;
+    
+    	Node(int data) {
+    		this.data = data;
+    		left = null;
+    		right = null;
+    	}
+    }*/
+    
+    public static int minTime(Node root, int target) 
+    {
+        Map<Node, Node> map = new HashMap<>();
+        map.put(root, new Node(-1));
+        Node serch = serchdata(target, root);
+        findParents(root, map);
+        return BurnTree(serch, map, 0)-1;
+    }
+   
+
+    private static int BurnTree(Node serch, Map<Node, Node> map, int count) {
+        Map<Node, Boolean> vis = new HashMap<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(serch);
+        vis.put(serch, true);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                Node top = queue.poll();
+
+                if (top.left != null && !vis.containsKey(top.left)) {
+                    queue.add(top.left);
+                    vis.put(top.left, true);
+                }
+                if (top.right != null && !vis.containsKey(top.right)) {
+                    queue.add(top.right);
+                    vis.put(top.right, true);
+                }
+                Node parent = map.get(top);
+                if (parent != null && !vis.containsKey(parent)&&parent.data!=-1) {
+                    queue.add(parent);
+                    vis.put(parent, true);
+                }
+            }
+
+            count++;
+        }
+        return count;
+    }
+
+    private static Node serchdata(int i, Node root) {
+        if (root == null)
+            return null;
+
+        if (root.data == i)
+            return root;
+
+        Node leftResult = serchdata(i, root.left);
+        Node rightResult = serchdata(i, root.right);
+
+        return leftResult != null ? leftResult : rightResult;
+    }
+
+    private static void findParents(Node root, Map<Node, Node> map) {
+        if (root == null)
+            return;
+        if (root.left != null) {
+            map.put(root.left, root);
+            findParents(root.left, map);
+        }
+        if (root.right != null) {
+            map.put(root.right, root);
+            findParents(root.right, map);
+        }
+    }
+}
