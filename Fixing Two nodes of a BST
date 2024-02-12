@@ -1,0 +1,47 @@
+class Solution
+{
+    //Function to fix a given BST where two nodes are swapped.  
+    public Node correctBST(Node root)
+    {
+        //code here.
+        Node first = null;
+        Node second = null;
+        Node current = root;
+        Node prev = null;
+        while (current != null) {
+            if (current.left != null) {
+                Node temp = current.left;
+                while (temp.right != null && temp.right != current) {
+                    temp = temp.right;
+                }
+                if (temp.right == null) {
+                    temp.right = current;
+                    current = current.left;
+                } else {
+                    temp.right = null;
+                    if (prev != null && prev.data > current.data) {
+                        if (first == null) {
+                            first = prev;
+                        }
+                        second = current;
+                    }
+                    prev = current;
+                    current = current.right;
+                }
+            } else {
+                if (prev != null && prev.data > current.data) {
+                    if (first == null) {
+                        first = prev;
+                    }
+                    second = current;
+                }
+                prev = current;
+                current = current.right;
+            }
+        }
+        int temp = first.data;
+        first.data = second.data;
+        second.data = temp;
+        return root;
+    }
+}
