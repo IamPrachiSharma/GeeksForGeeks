@@ -1,0 +1,33 @@
+class Solution 
+{
+    //Function to find length of longest increasing subsequence.
+    static int longestSubsequence(int size, int a[])
+    {
+        // code here
+        
+        LinkedList<Integer> list = new LinkedList<Integer>();
+        
+        for(int i = 0; i  <size; i++){
+            
+            int index = 0;
+            boolean updated = false;
+            
+            while(!list.isEmpty() && index < list.size()){
+                if(a[i] <= list.get(index) ){
+                 list.remove(index);
+                 list.add(index, a[i]);
+                 updated = true;
+                  break;
+                    
+                }
+                
+               index++;
+            }
+            
+             if(updated != true)
+                 list.add(a[i]);
+        }
+        
+        return list.size();
+    }
+} 
