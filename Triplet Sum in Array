@@ -1,0 +1,31 @@
+class Solution
+{
+    //Function to find if there exists a triplet in the 
+    //array A[] which sums up to X.
+    public static boolean find3Numbers(int A[], int n, int X) { 
+    
+       // Your code Here
+       Arrays.sort(A);
+       int count =0;
+       for(int i=n-1;i>=2;i--){
+           int a=0;
+           int b=i-1;
+           int c=i;
+           while(a<b){
+               if(A[a]+A[b]+A[c]==X){
+                   return true;
+               }
+               else if(A[a]+A[b]+A[c]>X){
+                   b--;
+                   
+               }
+               else{
+                   a++;
+               }
+           }
+       }
+       return false;
+     
+    }
+
+}
